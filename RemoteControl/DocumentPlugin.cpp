@@ -93,7 +93,7 @@ Receiver::Receiver(
             this, &Receiver::onNewConnection);
   }
 
-  m_answers.insert(std::make_pair("Trigger", [] (const QJsonObject& obj, const WSClient&)
+  m_answers.insert(std::make_pair("Trigger", [&] (const QJsonObject& obj, const WSClient&)
   {
     auto it = obj.find("Path");
     if(it == obj.end())
@@ -103,7 +103,7 @@ Receiver::Receiver(
     if(!path.valid())
       return;
 
-    Scenario::TimeNodeModel& tn = path.find();
+    Scenario::TimeNodeModel& tn = path.find(doc);
     tn.trigger()->triggeredByGui();
   }));
 
@@ -186,7 +186,7 @@ void Receiver::registerTimeNode(Path<Scenario::TimeNodeModel> tn)
   QJsonObject mess;
   mess[iscore::StringConstant().Message] = "TriggerAdded";
   mess[iscore::StringConstant().Path] = toJsonObject(tn);
-  mess[iscore::StringConstant().Name] = tn.find().metadata().getName();
+  mess[iscore::StringConstant().Name] = tn.find(m_dev.context()).metadata().getName();
   QJsonDocument doc{mess};
   auto json = doc.toJson();
 
@@ -242,7 +242,7 @@ void Receiver::onNewConnection()
     for(auto path : m_activeTimeNodes)
     {
       mess[iscore::StringConstant().Path] = toJsonObject(path);
-      mess[iscore::StringConstant().Name] = path.find().metadata().getName();
+      mess[iscore::StringConstant().Name] = path.find(m_dev.context()).metadata().getName();
       QJsonDocument doc{mess};
       auto json = doc.toJson();
       client.socket->sendTextMessage(json);
