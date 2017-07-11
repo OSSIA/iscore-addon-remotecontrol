@@ -99,7 +99,7 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto path = unmarshall<Path<Scenario::TimeNodeModel>>((*it).toObject());
+    auto path = iscore::unmarshall<Path<Scenario::TimeNodeModel>>((*it).toObject());
     if(!path.valid())
       return;
 
@@ -114,7 +114,7 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto message = unmarshall<::State::Message>(obj);
+    auto message = iscore::unmarshall<::State::Message>(obj);
     m_dev.updateProxy.updateRemoteValue(message.address, message.value);
   }));
 
@@ -137,7 +137,7 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto addr = unmarshall<::State::Address>((*it).toObject());
+    auto addr = iscore::unmarshall<::State::Address>((*it).toObject());
     auto d = m_dev.list().findDevice(addr.device);
     if(d)
     {
@@ -155,7 +155,7 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto addr = unmarshall<::State::Address>((*it).toObject());
+    auto addr = iscore::unmarshall<::State::Address>((*it).toObject());
     auto d = m_dev.list().findDevice(addr.device);
     if(d)
     {
@@ -304,7 +304,7 @@ void Receiver::on_valueUpdated(const ::State::Address& addr, const ossia::value&
   auto it = m_listenedAddresses.find(addr);
   if(it != m_listenedAddresses.end())
   {
-    ::State::Message m{::State::AddressAccessor{addr}, ::State::fromOSSIAValue(v)};
+    ::State::Message m{::State::AddressAccessor{addr}, v};
 
     JSONObject::Serializer s;
     s.readFrom(m);
