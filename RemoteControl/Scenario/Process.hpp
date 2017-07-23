@@ -10,7 +10,7 @@
 namespace RemoteControl
 {
 class ISCORE_ADDON_REMOTECONTROL_EXPORT ProcessComponent :
-        public Scenario::GenericProcessComponent<DocumentPlugin>
+        public Process::GenericProcessComponent<DocumentPlugin>
 {
         ABSTRACT_COMPONENT_METADATA(RemoteControl::ProcessComponent, "b8a691ea-5352-468d-b78c-04e420c252d1")
     public:
@@ -25,7 +25,7 @@ class ISCORE_ADDON_REMOTECONTROL_EXPORT ProcessComponent :
 };
 
 template<typename Process_T>
-using ProcessComponent_T = Scenario::GenericProcessComponent_T<ProcessComponent, Process_T>;
+using ProcessComponent_T = Process::GenericProcessComponent_T<ProcessComponent, Process_T>;
 
 class ISCORE_ADDON_REMOTECONTROL_EXPORT ProcessComponentFactory :
         public iscore::GenericComponentFactory<

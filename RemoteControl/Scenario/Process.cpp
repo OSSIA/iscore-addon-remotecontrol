@@ -7,7 +7,7 @@ RemoteControl::ProcessComponent::ProcessComponent(
         const Id<iscore::Component>& id,
         const QString& name,
         QObject* parent):
-    Scenario::GenericProcessComponent<DocumentPlugin>{process, doc, id, name, parent}
+    Process::GenericProcessComponent<DocumentPlugin>{process, doc, id, name, parent}
 {
 }
 

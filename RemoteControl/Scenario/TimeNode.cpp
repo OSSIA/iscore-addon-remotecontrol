@@ -1,5 +1,4 @@
 #include "TimeNode.hpp"
-#include <Scenario/Document/TimeNode/Trigger/TriggerModel.hpp>
 
 namespace RemoteControl
 {

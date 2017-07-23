@@ -104,7 +104,7 @@ Receiver::Receiver(
       return;
 
     Scenario::TimeNodeModel& tn = path.find(doc);
-    tn.trigger()->triggeredByGui();
+    tn.triggeredByGui();
   }));
 
   m_answers.insert(std::make_pair(iscore::StringConstant().Message, [this] (const QJsonObject& obj, const WSClient&)
