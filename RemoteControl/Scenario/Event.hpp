@@ -16,6 +16,6 @@ class Event final :
                 QObject* parent_comp);
 
     private:
-        Path<Scenario::TimeNodeModel> m_parent;
+        Path<Scenario::TimeSyncModel> m_parent;
 };
 }

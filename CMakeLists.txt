@@ -19,7 +19,7 @@ set(SRCS
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Loop.hpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Constraint.hpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Event.hpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/TimeNode.hpp"
+"${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Sync.hpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/State.hpp"
 
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Process.cpp"
@@ -27,7 +27,7 @@ set(SRCS
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Loop.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Constraint.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Event.cpp"
-"${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/TimeNode.cpp"
+"${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/Sync.cpp"
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/Scenario/State.cpp"
 
 "${CMAKE_CURRENT_SOURCE_DIR}/RemoteControl/ApplicationPlugin.hpp"

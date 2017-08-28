@@ -1,7 +1,7 @@
 #pragma once
 #include <RemoteControl/Scenario/Constraint.hpp>
 #include <RemoteControl/Scenario/Event.hpp>
-#include <RemoteControl/Scenario/TimeNode.hpp>
+#include <RemoteControl/Scenario/Sync.hpp>
 #include <RemoteControl/Scenario/State.hpp>
 #include <Scenario/Document/Components/ScenarioComponent.hpp>
 #include <QMetaObject>
@@ -39,7 +39,7 @@ using ScenarioComponent = HierarchicalScenarioComponent<
     Scenario::ProcessModel,
     Constraint,
     Event,
-    TimeNode,
+    Sync,
     State>;
 
 

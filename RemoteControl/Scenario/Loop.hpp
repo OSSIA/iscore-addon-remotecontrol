@@ -1,7 +1,7 @@
 #pragma once
 #include <RemoteControl/Scenario/Constraint.hpp>
 #include <RemoteControl/Scenario/Event.hpp>
-#include <RemoteControl/Scenario/TimeNode.hpp>
+#include <RemoteControl/Scenario/Sync.hpp>
 #include <RemoteControl/Scenario/State.hpp>
 #include <Scenario/Document/Components/ScenarioComponent.hpp>
 #include <Loop/LoopProcessModel.hpp>
@@ -38,7 +38,7 @@ using LoopComponent =
        ::Loop::ProcessModel,
        Constraint,
        Event,
-       TimeNode,
+       Sync,
        State
 >;
 

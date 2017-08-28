@@ -14,7 +14,7 @@ RemoteApplication::RemoteApplication(int &argc, char **argv):
     connect(obj, SIGNAL(stop()), &m_triggers, SLOT(on_stop()));
     connect(obj, SIGNAL(addressChanged(QString)), &m_triggers, SLOT(on_addressChanged(QString)));
 
-    obj->setProperty("model", QVariant::fromValue(&m_triggers.m_activeTimeNodes));
+    obj->setProperty("model", QVariant::fromValue(&m_triggers.m_activeSyncs));
 }
 
 RemoteApplication::~RemoteApplication()

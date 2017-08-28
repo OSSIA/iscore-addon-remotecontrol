@@ -17,7 +17,7 @@ class DeviceDocumentPlugin;
 }
 namespace Scenario
 {
-class TimeNodeModel;
+class TimeSyncModel;
 }
 namespace RemoteControl
 {
@@ -39,9 +39,9 @@ struct Receiver : public QObject, public Nano::Observer
 
         ~Receiver();
 
-        void registerTimeNode(Path<Scenario::TimeNodeModel> tn);
+        void registerSync(Path<Scenario::TimeSyncModel> tn);
 
-        void unregisterTimeNode(Path<Scenario::TimeNodeModel> tn);
+        void unregisterSync(Path<Scenario::TimeSyncModel> tn);
 
         void onNewConnection();
 
@@ -60,7 +60,7 @@ struct Receiver : public QObject, public Nano::Observer
         QList<WSClient> m_clients;
 
         Explorer::DeviceDocumentPlugin& m_dev;
-        std::list<Path<Scenario::TimeNodeModel>> m_activeTimeNodes;
+        std::list<Path<Scenario::TimeSyncModel>> m_activeSyncs;
 
         std::map<QString, std::function<void(const QJsonObject&, const WSClient&)>> m_answers;
         iscore::hash_map<::State::Address, WSClient> m_listenedAddresses;

@@ -99,11 +99,11 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto path = iscore::unmarshall<Path<Scenario::TimeNodeModel>>((*it).toObject());
+    auto path = iscore::unmarshall<Path<Scenario::TimeSyncModel>>((*it).toObject());
     if(!path.valid())
       return;
 
-    Scenario::TimeNodeModel& tn = path.find(doc);
+    Scenario::TimeSyncModel& tn = path.find(doc);
     tn.triggeredByGui();
   }));
 
@@ -176,12 +176,12 @@ Receiver::~Receiver()
 }
 
 
-void Receiver::registerTimeNode(Path<Scenario::TimeNodeModel> tn)
+void Receiver::registerSync(Path<Scenario::TimeSyncModel> tn)
 {
-  if(ossia::find(m_activeTimeNodes, tn) != m_activeTimeNodes.end())
+  if(ossia::find(m_activeSyncs, tn) != m_activeSyncs.end())
     return;
 
-  m_activeTimeNodes.push_back(tn);
+  m_activeSyncs.push_back(tn);
 
   QJsonObject mess;
   mess[iscore::StringConstant().Message] = "TriggerAdded";
@@ -197,12 +197,12 @@ void Receiver::registerTimeNode(Path<Scenario::TimeNodeModel> tn)
 }
 
 
-void Receiver::unregisterTimeNode(Path<Scenario::TimeNodeModel> tn)
+void Receiver::unregisterSync(Path<Scenario::TimeSyncModel> tn)
 {
-  if(ossia::find(m_activeTimeNodes, tn) == m_activeTimeNodes.end())
+  if(ossia::find(m_activeSyncs, tn) == m_activeSyncs.end())
     return;
 
-  m_activeTimeNodes.remove(tn);
+  m_activeSyncs.remove(tn);
 
   QJsonObject mess;
   mess[iscore::StringConstant().Message] = "TriggerRemoved";
@@ -239,7 +239,7 @@ void Receiver::onNewConnection()
   {
     QJsonObject mess;
     mess[iscore::StringConstant().Message] = "TriggerAdded";
-    for(auto path : m_activeTimeNodes)
+    for(auto path : m_activeSyncs)
     {
       mess[iscore::StringConstant().Path] = toJsonObject(path);
       mess[iscore::StringConstant().Name] = path.find(m_dev.context()).metadata().getName();

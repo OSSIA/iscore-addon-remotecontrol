@@ -1,14 +1,14 @@
-#include "TimeNode.hpp"
+#include "Sync.hpp"
 
 namespace RemoteControl
 {
 
-TimeNode::TimeNode(
+Sync::Sync(
         const Id<iscore::Component>& id,
-        Scenario::TimeNodeModel& timeNode,
+        Scenario::TimeSyncModel& timeSync,
         const DocumentPlugin& doc,
         QObject* parent_comp):
-    Component{id, "TimeNodeComponent", parent_comp}
+    Component{id, "SyncComponent", parent_comp}
 {
 }
 

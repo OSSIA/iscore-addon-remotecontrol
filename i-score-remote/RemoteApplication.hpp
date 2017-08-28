@@ -6,13 +6,13 @@
 
 class QApplication;
 
-struct TimeNodeInfo
+struct SyncInfo
 {
         QJsonValue path;
         QString prettyName;
-        friend bool operator==(const TimeNodeInfo& tn, const QJsonValue& rhs)
+        friend bool operator==(const SyncInfo& tn, const QJsonValue& rhs)
         { return tn.path == rhs; }
-        friend bool operator!=(const TimeNodeInfo& tn, const QJsonValue& rhs)
+        friend bool operator!=(const SyncInfo& tn, const QJsonValue& rhs)
         { return tn.path != rhs; }
 };
 
@@ -29,15 +29,15 @@ class TriggerList : public QAbstractListModel
 
         int rowCount(const QModelIndex& ) const override
         {
-            return timeNodes.size();
+            return timeSyncs.size();
         }
 
         QVariant data(const QModelIndex& index, int ) const override
         {
-            if(index.row() >= timeNodes.size())
+            if(index.row() >= timeSyncs.size())
                 return {};
 
-            return timeNodes[index.row()].prettyName;
+            return timeSyncs[index.row()].prettyName;
         }
 
         QHash<int, QByteArray> roleNames() const override
@@ -46,7 +46,7 @@ class TriggerList : public QAbstractListModel
             hash.insert(Qt::DisplayRole, "name");
             return hash;
         }
-        std::vector<TimeNodeInfo> timeNodes;
+        std::vector<SyncInfo> timeSyncs;
 };
 
 struct WebSocketHandler : public QObject
@@ -54,7 +54,7 @@ struct WebSocketHandler : public QObject
         Q_OBJECT
 
     public:
-        TriggerList m_activeTimeNodes;
+        TriggerList m_activeSyncs;
     private:
         QWebSocket m_server;
         std::map<QString, std::function<void(const QJsonObject&)>> m_answers;
@@ -70,13 +70,13 @@ struct WebSocketHandler : public QObject
                     return;
 
                 auto it = std::find(
-                            m_activeTimeNodes.timeNodes.begin(),
-                            m_activeTimeNodes.timeNodes.end(),
+                            m_activeSyncs.timeSyncs.begin(),
+                            m_activeSyncs.timeSyncs.end(),
                             *json_it);
-                if(it == m_activeTimeNodes.timeNodes.end())
+                if(it == m_activeSyncs.timeSyncs.end())
                 {
-                    m_activeTimeNodes.apply([=] () {
-                        m_activeTimeNodes.timeNodes.emplace_back(TimeNodeInfo{*json_it, obj[iscore::StringConstant().Name].toString()});
+                    m_activeSyncs.apply([=] () {
+                        m_activeSyncs.timeSyncs.emplace_back(SyncInfo{*json_it, obj[iscore::StringConstant().Name].toString()});
                     });
                 }
             }));
@@ -89,12 +89,12 @@ struct WebSocketHandler : public QObject
                     return;
 
                 auto it = std::find(
-                            m_activeTimeNodes.timeNodes.begin(),
-                            m_activeTimeNodes.timeNodes.end(),
+                            m_activeSyncs.timeSyncs.begin(),
+                            m_activeSyncs.timeSyncs.end(),
                             *json_it);
-                if(it != m_activeTimeNodes.timeNodes.end())
+                if(it != m_activeSyncs.timeSyncs.end())
                 {
-                    m_activeTimeNodes.apply([=] () { m_activeTimeNodes.timeNodes.erase(it); });
+                    m_activeSyncs.apply([=] () { m_activeSyncs.timeSyncs.erase(it); });
                 }
             }));
 
@@ -146,10 +146,10 @@ struct WebSocketHandler : public QObject
     public slots:
         void on_rowPressed(int i)
         {
-            if(i >= m_activeTimeNodes.timeNodes.size())
+            if(i >= m_activeSyncs.timeSyncs.size())
                 return;
 
-            auto tn = m_activeTimeNodes.timeNodes[i];
+            auto tn = m_activeSyncs.timeSyncs[i];
 
             QJsonObject mess;
             mess[iscore::StringConstant().Message] = "Trigger";
@@ -185,7 +185,7 @@ struct WebSocketHandler : public QObject
         {
             m_server.close();
 
-            m_activeTimeNodes.apply([this] () { m_activeTimeNodes.timeNodes.clear(); });
+            m_activeSyncs.apply([this] () { m_activeSyncs.timeSyncs.clear(); });
 
             m_server.open(QUrl{addr});
         }
