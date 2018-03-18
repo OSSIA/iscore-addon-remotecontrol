@@ -1,11 +1,11 @@
 #include "Presenter.hpp"
 #include "Model.hpp"
 #include "View.hpp"
-#include <iscore/command/Command.hpp>
-#include <iscore/command/Dispatchers/ICommandDispatcher.hpp>
+#include <score/command/Command.hpp>
+#include <score/command/Dispatchers/ICommandDispatcher.hpp>
 #include <QApplication>
 #include <QStyle>
-#include <iscore/command/SettingsCommand.hpp>
+#include <score/command/SettingsCommand.hpp>
 
 namespace RemoteControl
 {
@@ -15,7 +15,7 @@ Presenter::Presenter(
         Model& m,
         View& v,
         QObject *parent):
-    iscore::SettingsDelegatePresenter{m, v, parent}
+    score::GlobalSettingsPresenter{m, v, parent}
 {
     {
         // view -> model

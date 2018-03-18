@@ -6,7 +6,7 @@ namespace RemoteControl
 LoopBase::LoopBase(
         ::Loop::ProcessModel& scenario,
         DocumentPlugin& doc,
-        const Id<iscore::Component>& id,
+        const Id<score::Component>& id,
         QObject* parent_obj):
     ProcessComponent_T<Loop::ProcessModel>{scenario, doc, id, "LoopComponent", parent_obj}
 {

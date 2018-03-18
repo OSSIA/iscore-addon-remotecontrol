@@ -1,5 +1,5 @@
 #pragma once
-#include <iscore/plugins/settingsdelegate/SettingsDelegatePresenter.hpp>
+#include <score/plugins/settingsdelegate/SettingsDelegatePresenter.hpp>
 
 namespace RemoteControl
 {
@@ -8,7 +8,7 @@ namespace Settings
 class Model;
 class View;
 class Presenter :
-        public iscore::SettingsDelegatePresenter
+        public score::GlobalSettingsPresenter
 {
     public:
         using model_type = Model;

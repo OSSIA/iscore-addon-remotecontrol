@@ -3,6 +3,7 @@
 #include <QAbstractListModel>
 #include <QtWebSockets/QtWebSockets>
 #include <functional>
+#include <score/serialization/StringConstants.hpp>
 
 class QApplication;
 
@@ -76,7 +77,7 @@ struct WebSocketHandler : public QObject
                 if(it == m_activeSyncs.timeSyncs.end())
                 {
                     m_activeSyncs.apply([=] () {
-                        m_activeSyncs.timeSyncs.emplace_back(SyncInfo{*json_it, obj[iscore::StringConstant().Name].toString()});
+                        m_activeSyncs.timeSyncs.emplace_back(SyncInfo{*json_it, obj[score::StringConstant().Name].toString()});
                     });
                 }
             }));
@@ -143,7 +144,7 @@ struct WebSocketHandler : public QObject
         }
 
 
-    public slots:
+    public Q_SLOTS:
         void on_rowPressed(int i)
         {
             if(i >= m_activeSyncs.timeSyncs.size())
@@ -152,8 +153,8 @@ struct WebSocketHandler : public QObject
             auto tn = m_activeSyncs.timeSyncs[i];
 
             QJsonObject mess;
-            mess[iscore::StringConstant().Message] = "Trigger";
-            mess[iscore::StringConstant().Path] = tn.path;
+            mess[score::StringConstant().Message] = "Trigger";
+            mess[score::StringConstant().Path] = tn.path;
             QJsonDocument doc{mess};
             auto json = doc.toJson();
 
@@ -163,21 +164,21 @@ struct WebSocketHandler : public QObject
         void on_play()
         {
             QJsonObject mess;
-            mess[iscore::StringConstant().Message] = "Play";
+            mess[score::StringConstant().Message] = "Play";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
         }
 
         void on_pause()
         {
             QJsonObject mess;
-            mess[iscore::StringConstant().Message] = "Pause";
+            mess[score::StringConstant().Message] = "Pause";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
         }
 
         void on_stop()
         {
             QJsonObject mess;
-            mess[iscore::StringConstant().Message] = "Stop";
+            mess[score::StringConstant().Message] = "Stop";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
         }
 

@@ -1,17 +1,17 @@
-#include "Constraint.hpp"
+#include "Interval.hpp"
 namespace RemoteControl
 {
-ConstraintBase::ConstraintBase(
-        const Id<iscore::Component>& id,
-        Scenario::ConstraintModel& constraint,
+IntervalBase::IntervalBase(
+        const Id<score::Component>& id,
+        Scenario::IntervalModel& Interval,
         DocumentPlugin& doc,
         QObject* parent_comp):
-    parent_t{constraint, doc, id, "ConstraintComponent", parent_comp}
+    parent_t{Interval, doc, id, "IntervalComponent", parent_comp}
 {
 }
 
-ProcessComponent*ConstraintBase::make(
-        const Id<iscore::Component>& id,
+ProcessComponent*IntervalBase::make(
+        const Id<score::Component>& id,
         ProcessComponentFactory& factory,
         Process::ProcessModel& process)
 {
@@ -19,7 +19,7 @@ ProcessComponent*ConstraintBase::make(
 }
 
 
-bool ConstraintBase::removing(
+bool IntervalBase::removing(
         const Process::ProcessModel& cst,
         const ProcessComponent& comp)
 {

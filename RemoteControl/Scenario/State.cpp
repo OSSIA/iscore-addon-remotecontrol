@@ -4,7 +4,7 @@ namespace RemoteControl
 {
 
 State::State(
-        const Id<iscore::Component>& id,
+        const Id<score::Component>& id,
         Scenario::StateModel& state,
         const DocumentPlugin& doc,
         QObject* parent_comp):

@@ -2,7 +2,7 @@
 
 #include <core/document/Document.hpp>
 #include <core/document/DocumentModel.hpp>
-#include <iscore/document/DocumentInterface.hpp>
+#include <score/document/DocumentInterface.hpp>
 
 #include <RemoteControl/Scenario/Scenario.hpp>
 #include <RemoteControl/Settings/Model.hpp>
@@ -13,18 +13,18 @@
 #include <QBuffer>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <iscore/serialization/VisitorCommon.hpp>
+#include <score/serialization/VisitorCommon.hpp>
 #include <Scenario/Application/ScenarioActions.hpp>
-#include <iscore/model/path/PathSerialization.hpp>
-#include <iscore/actions/ActionManager.hpp>
-#include <iscore/actions/Action.hpp>
+#include <score/model/path/PathSerialization.hpp>
+#include <score/actions/ActionManager.hpp>
+#include <score/actions/Action.hpp>
 namespace RemoteControl
 {
 DocumentPlugin::DocumentPlugin(
-    const iscore::DocumentContext& doc,
-    Id<iscore::DocumentPlugin> id,
+    const score::DocumentContext& doc,
+    Id<score::DocumentPlugin> id,
     QObject* parent):
-  iscore::DocumentPlugin{doc, std::move(id), "RemoteControl::DocumentPlugin", parent},
+  score::DocumentPlugin{doc, std::move(id), "RemoteControl::DocumentPlugin", parent},
   receiver{doc, 10212}
 {
   auto& set = m_context.app.settings<Settings::Model>();
@@ -58,8 +58,8 @@ void DocumentPlugin::create()
 
   auto& doc = m_context.document.model().modelDelegate();
   auto scenar = safe_cast<Scenario::ScenarioDocumentModel*>(&doc);
-  auto& cstr = scenar->baseScenario().constraint();
-  m_root = new Constraint(
+  auto& cstr = scenar->baseScenario().interval();
+  m_root = new Interval(
              getStrongId(cstr.components()),
              cstr,
              *this,
@@ -75,14 +75,14 @@ void DocumentPlugin::cleanup()
   // Delete
   auto& doc = m_context.document.model().modelDelegate();
   auto scenar = safe_cast<Scenario::ScenarioDocumentModel*>(&doc);
-  auto& cstr = scenar->baseScenario().constraint();
+  auto& cstr = scenar->baseScenario().interval();
 
   cstr.components().remove(m_root);
   m_root = nullptr;
 }
 
 Receiver::Receiver(
-    const iscore::DocumentContext& doc,
+    const score::DocumentContext& doc,
     quint16 port):
   m_server{"i-score-ctrl",  QWebSocketServer::NonSecureMode},
   m_dev{doc.plugin<Explorer::DeviceDocumentPlugin>()}
@@ -99,7 +99,7 @@ Receiver::Receiver(
     if(it == obj.end())
       return;
 
-    auto path = iscore::unmarshall<Path<Scenario::TimeSyncModel>>((*it).toObject());
+    auto path = score::unmarshall<Path<Scenario::TimeSyncModel>>((*it).toObject());
     if(!path.valid())
       return;
 
@@ -107,14 +107,14 @@ Receiver::Receiver(
     tn.triggeredByGui();
   }));
 
-  m_answers.insert(std::make_pair(iscore::StringConstant().Message, [this] (const QJsonObject& obj, const WSClient&)
+  m_answers.insert(std::make_pair(score::StringConstant().Message, [this] (const QJsonObject& obj, const WSClient&)
   {
     // The message is stored at the "root" level of the json.
-    auto it = obj.find(iscore::StringConstant().Address);
+    auto it = obj.find(score::StringConstant().Address);
     if(it == obj.end())
       return;
 
-    auto message = iscore::unmarshall<::State::Message>(obj);
+    auto message = score::unmarshall<::State::Message>(obj);
     m_dev.updateProxy.updateRemoteValue(message.address, message.value);
   }));
 
@@ -133,11 +133,11 @@ Receiver::Receiver(
   }));
   m_answers.insert(std::make_pair("EnableListening", [&] (const QJsonObject& obj, const WSClient& c)
   {
-    auto it = obj.find(iscore::StringConstant().Address);
+    auto it = obj.find(score::StringConstant().Address);
     if(it == obj.end())
       return;
 
-    auto addr = iscore::unmarshall<::State::Address>((*it).toObject());
+    auto addr = score::unmarshall<::State::Address>((*it).toObject());
     auto d = m_dev.list().findDevice(addr.device);
     if(d)
     {
@@ -151,11 +151,11 @@ Receiver::Receiver(
   }));
   m_answers.insert(std::make_pair("DisableListening", [&] (const QJsonObject& obj, const WSClient&)
   {
-    auto it = obj.find(iscore::StringConstant().Address);
+    auto it = obj.find(score::StringConstant().Address);
     if(it == obj.end())
       return;
 
-    auto addr = iscore::unmarshall<::State::Address>((*it).toObject());
+    auto addr = score::unmarshall<::State::Address>((*it).toObject());
     auto d = m_dev.list().findDevice(addr.device);
     if(d)
     {
@@ -184,9 +184,9 @@ void Receiver::registerSync(Path<Scenario::TimeSyncModel> tn)
   m_activeSyncs.push_back(tn);
 
   QJsonObject mess;
-  mess[iscore::StringConstant().Message] = "TriggerAdded";
-  mess[iscore::StringConstant().Path] = toJsonObject(tn);
-  mess[iscore::StringConstant().Name] = tn.find(m_dev.context()).metadata().getName();
+  mess[score::StringConstant().Message] = "TriggerAdded";
+  mess[score::StringConstant().Path] = toJsonObject(tn);
+  mess[score::StringConstant().Name] = tn.find(m_dev.context()).metadata().getName();
   QJsonDocument doc{mess};
   auto json = doc.toJson();
 
@@ -205,8 +205,8 @@ void Receiver::unregisterSync(Path<Scenario::TimeSyncModel> tn)
   m_activeSyncs.remove(tn);
 
   QJsonObject mess;
-  mess[iscore::StringConstant().Message] = "TriggerRemoved";
-  mess[iscore::StringConstant().Path] = toJsonObject(tn);
+  mess[score::StringConstant().Message] = "TriggerRemoved";
+  mess[score::StringConstant().Path] = toJsonObject(tn);
   QJsonDocument doc{mess};
   auto json = doc.toJson();
 
@@ -230,7 +230,7 @@ void Receiver::onNewConnection()
 
   {
     QJsonObject mess;
-    mess[iscore::StringConstant().Message] = "DeviceTree";
+    mess[score::StringConstant().Message] = "DeviceTree";
     mess["Nodes"] = toJsonObject(m_dev.rootNode());
     QJsonDocument doc{mess};
     client.socket->sendTextMessage(doc.toJson());
@@ -238,11 +238,11 @@ void Receiver::onNewConnection()
 
   {
     QJsonObject mess;
-    mess[iscore::StringConstant().Message] = "TriggerAdded";
+    mess[score::StringConstant().Message] = "TriggerAdded";
     for(auto path : m_activeSyncs)
     {
-      mess[iscore::StringConstant().Path] = toJsonObject(path);
-      mess[iscore::StringConstant().Name] = path.find(m_dev.context()).metadata().getName();
+      mess[score::StringConstant().Path] = toJsonObject(path);
+      mess[score::StringConstant().Name] = path.find(m_dev.context()).metadata().getName();
       QJsonDocument doc{mess};
       auto json = doc.toJson();
       client.socket->sendTextMessage(json);
@@ -267,7 +267,7 @@ void Receiver::processBinaryMessage(QByteArray message, const WSClient& w)
     return;
 
   auto obj = doc.object();
-  auto it = obj.find(iscore::StringConstant().Message);
+  auto it = obj.find(score::StringConstant().Message);
   if(it == obj.end())
     return;
 
@@ -308,7 +308,7 @@ void Receiver::on_valueUpdated(const ::State::Address& addr, const ossia::value&
 
     JSONObject::Serializer s;
     s.readFrom(m);
-    s.obj[iscore::StringConstant().Message] = iscore::StringConstant().Message;
+    s.obj[score::StringConstant().Message] = score::StringConstant().Message;
     QWebSocket* w = it->second.socket;
     w->sendTextMessage(QJsonDocument(s.obj).toJson());
   }

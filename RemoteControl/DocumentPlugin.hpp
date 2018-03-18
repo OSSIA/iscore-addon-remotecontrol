@@ -1,5 +1,5 @@
 #pragma once
-#include <iscore/plugins/documentdelegate/plugin/DocumentPlugin.hpp>
+#include <score/plugins/documentdelegate/plugin/DocumentPlugin.hpp>
 #include <QtWebSockets/QWebSocketServer>
 #include <QtWebSockets/QWebSocket>
 #include <State/Message.hpp>
@@ -21,7 +21,7 @@ class TimeSyncModel;
 }
 namespace RemoteControl
 {
-class Constraint;
+class Interval;
 
 struct WSClient
 {
@@ -34,7 +34,7 @@ struct Receiver : public QObject, public Nano::Observer
 {
     public:
         explicit Receiver(
-                const iscore::DocumentContext& doc,
+                const score::DocumentContext& doc,
                 quint16 port);
 
         ~Receiver();
@@ -63,15 +63,15 @@ struct Receiver : public QObject, public Nano::Observer
         std::list<Path<Scenario::TimeSyncModel>> m_activeSyncs;
 
         std::map<QString, std::function<void(const QJsonObject&, const WSClient&)>> m_answers;
-        iscore::hash_map<::State::Address, WSClient> m_listenedAddresses;
+        score::hash_map<::State::Address, WSClient> m_listenedAddresses;
 };
 
-class DocumentPlugin : public iscore::DocumentPlugin
+class DocumentPlugin : public score::DocumentPlugin
 {
     public:
         DocumentPlugin(
-                const iscore::DocumentContext& doc,
-                Id<iscore::DocumentPlugin> id,
+                const score::DocumentContext& doc,
+                Id<score::DocumentPlugin> id,
                 QObject* parent);
 
         ~DocumentPlugin();
@@ -83,6 +83,6 @@ class DocumentPlugin : public iscore::DocumentPlugin
         void create();
         void cleanup();
 
-        Constraint* m_root{};
+        Interval* m_root{};
 };
 }

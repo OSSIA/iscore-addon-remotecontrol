@@ -4,7 +4,7 @@ namespace RemoteControl
 {
 
 Sync::Sync(
-        const Id<iscore::Component>& id,
+        const Id<score::Component>& id,
         Scenario::TimeSyncModel& timeSync,
         const DocumentPlugin& doc,
         QObject* parent_comp):

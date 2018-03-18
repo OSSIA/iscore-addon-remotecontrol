@@ -1,6 +1,6 @@
 #pragma once
 #include <RemoteControl/Settings/Model.hpp>
-#include <iscore/plugins/settingsdelegate/SettingsDelegateView.hpp>
+#include <score/plugins/settingsdelegate/SettingsDelegateView.hpp>
 class QCheckBox;
 class QDoubleSpinBox;
 namespace RemoteControl
@@ -9,14 +9,14 @@ namespace Settings
 {
 
 class View :
-        public iscore::SettingsDelegateView
+        public score::GlobalSettingsView
 {
         Q_OBJECT
     public:
         View();
         void setEnabled(bool);
 
-    signals:
+    Q_SIGNALS:
         void enabledChanged(bool);
 
     private:

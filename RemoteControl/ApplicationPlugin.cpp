@@ -4,18 +4,18 @@
 #include <core/document/Document.hpp>
 #include <core/document/DocumentModel.hpp>
 
-#include <iscore/tools/IdentifierGeneration.hpp>
+#include <score/tools/IdentifierGeneration.hpp>
 namespace RemoteControl
 {
 ApplicationPlugin::ApplicationPlugin(
-        const iscore::GUIApplicationContext& app):
+        const score::GUIApplicationContext& app):
     GUIApplicationPlugin {app}
 {
 
 }
 
 void ApplicationPlugin::on_createdDocument(
-        iscore::Document& doc)
+        score::Document& doc)
 {
     doc.model().addPluginModel(
                 new DocumentPlugin{doc.context(), getStrongId(doc.model().pluginModels()), &doc.model()});

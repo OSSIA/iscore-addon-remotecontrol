@@ -8,7 +8,7 @@ namespace Settings
 
 namespace Parameters
 {
-        const iscore::sp<ModelEnabledParameter> Enabled{
+        const score::sp<ModelEnabledParameter> Enabled{
             QStringLiteral("RemoteControl/Enabled"),
                     false};
 
@@ -17,11 +17,11 @@ namespace Parameters
         }
 }
 
-Model::Model(QSettings& set, const iscore::ApplicationContext& ctx)
+Model::Model(QSettings& set, const score::ApplicationContext& ctx)
 {
-    iscore::setupDefaultSettings(set, Parameters::list(), *this);
+    score::setupDefaultSettings(set, Parameters::list(), *this);
 }
 
-ISCORE_SETTINGS_PARAMETER_CPP(bool, Model, Enabled)
+SCORE_SETTINGS_PARAMETER_CPP(bool, Model, Enabled)
 }
 }

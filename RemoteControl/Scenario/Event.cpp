@@ -4,7 +4,7 @@
 namespace RemoteControl
 {
 Event::Event(
-        const Id<iscore::Component>& id,
+        const Id<score::Component>& id,
         Scenario::EventModel& event,
         DocumentPlugin& doc,
         QObject* parent_comp):

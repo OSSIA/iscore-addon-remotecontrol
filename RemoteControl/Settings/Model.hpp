@@ -1,13 +1,13 @@
 #pragma once
-#include <iscore/plugins/settingsdelegate/SettingsDelegateModel.hpp>
-#include <iscore_addon_remotecontrol_export.h>
+#include <score/plugins/settingsdelegate/SettingsDelegateModel.hpp>
+#include <score_addon_remotecontrol_export.h>
 
 namespace RemoteControl
 {
 namespace Settings
 {
-class ISCORE_ADDON_REMOTECONTROL_EXPORT Model :
-        public iscore::SettingsDelegateModel
+class SCORE_ADDON_REMOTECONTROL_EXPORT Model :
+        public score::SettingsDelegateModel
 {
         Q_OBJECT
 
@@ -15,12 +15,12 @@ class ISCORE_ADDON_REMOTECONTROL_EXPORT Model :
 
         bool m_Enabled = false;
     public:
-        Model(QSettings& set, const iscore::ApplicationContext& ctx);
+        Model(QSettings& set, const score::ApplicationContext& ctx);
 
-        ISCORE_SETTINGS_PARAMETER_HPP(bool, Enabled)
+        SCORE_SETTINGS_PARAMETER_HPP(bool, Enabled)
 };
 
-ISCORE_SETTINGS_PARAMETER(Model, Enabled)
+SCORE_SETTINGS_PARAMETER(Model, Enabled)
 
 }
 }

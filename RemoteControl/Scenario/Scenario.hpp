@@ -1,5 +1,5 @@
 #pragma once
-#include <RemoteControl/Scenario/Constraint.hpp>
+#include <RemoteControl/Scenario/Interval.hpp>
 #include <RemoteControl/Scenario/Event.hpp>
 #include <RemoteControl/Scenario/Sync.hpp>
 #include <RemoteControl/Scenario/State.hpp>
@@ -17,12 +17,12 @@ class ScenarioBase :
        ScenarioBase(
                Scenario::ProcessModel& scenario,
                DocumentPlugin& doc,
-                const Id<iscore::Component>& id,
+                const Id<score::Component>& id,
                QObject* parent_obj);
 
        template<typename Component_T, typename Element>
        Component_T* make(
-               const Id<iscore::Component>& id,
+               const Id<score::Component>& id,
                Element& elt)
        {
            return new Component_T{id, elt, system(), this};
@@ -37,7 +37,7 @@ class ScenarioBase :
 using ScenarioComponent = HierarchicalScenarioComponent<
     ScenarioBase,
     Scenario::ProcessModel,
-    Constraint,
+    Interval,
     Event,
     Sync,
     State>;

@@ -1,15 +1,15 @@
 #pragma once
-#include <iscore/plugins/application/GUIApplicationPlugin.hpp>
+#include <score/plugins/application/GUIApplicationPlugin.hpp>
 
 namespace RemoteControl
 {
 class ApplicationPlugin final :
-        public iscore::GUIApplicationPlugin
+        public score::GUIApplicationPlugin
 {
     public:
-        ApplicationPlugin(const iscore::GUIApplicationContext& app);
+        ApplicationPlugin(const score::GUIApplicationContext& app);
 
     protected:
-        void on_createdDocument(iscore::Document& doc) override;
+        void on_createdDocument(score::Document& doc) override;
 };
 }
