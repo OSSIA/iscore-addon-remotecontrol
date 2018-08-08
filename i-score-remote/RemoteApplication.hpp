@@ -4,7 +4,7 @@
 #include <QtWebSockets/QtWebSockets>
 #include <functional>
 #include <score/serialization/StringConstants.hpp>
-
+#include <wobjectdefs.h>
 class QApplication;
 
 struct SyncInfo
@@ -52,7 +52,7 @@ class TriggerList : public QAbstractListModel
 
 struct WebSocketHandler : public QObject
 {
-        Q_OBJECT
+        W_OBJECT(WebSocketHandler)
 
     public:
         TriggerList m_activeSyncs;
@@ -144,7 +144,6 @@ struct WebSocketHandler : public QObject
         }
 
 
-    public Q_SLOTS:
         void on_rowPressed(int i)
         {
             if(i >= m_activeSyncs.timeSyncs.size())
@@ -159,28 +158,28 @@ struct WebSocketHandler : public QObject
             auto json = doc.toJson();
 
             m_server.sendTextMessage(json);
-        }
+        } W_SLOT(on_rowPressed)
 
         void on_play()
         {
             QJsonObject mess;
             mess[score::StringConstant().Message] = "Play";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
-        }
+        } W_SLOT(on_play)
 
         void on_pause()
         {
             QJsonObject mess;
             mess[score::StringConstant().Message] = "Pause";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
-        }
+        } W_SLOT(on_pause)
 
         void on_stop()
         {
             QJsonObject mess;
             mess[score::StringConstant().Message] = "Stop";
             m_server.sendTextMessage(QJsonDocument{mess}.toJson());
-        }
+        } W_SLOT(on_stop)
 
         void on_addressChanged(QString addr)
         {
@@ -189,7 +188,7 @@ struct WebSocketHandler : public QObject
             m_activeSyncs.apply([this] () { m_activeSyncs.timeSyncs.clear(); });
 
             m_server.open(QUrl{addr});
-        }
+        } W_SLOT(on_addressChanged)
 };
 
 class RemoteApplication final : QObject

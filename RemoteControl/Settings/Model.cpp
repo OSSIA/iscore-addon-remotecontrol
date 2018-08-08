@@ -1,6 +1,8 @@
 #include "Model.hpp"
 #include <QSettings>
 
+#include <wobjectimpl.h>
+W_OBJECT_IMPL(RemoteControl::Settings::Model)
 namespace RemoteControl
 {
 namespace Settings
@@ -8,10 +10,7 @@ namespace Settings
 
 namespace Parameters
 {
-        const score::sp<ModelEnabledParameter> Enabled{
-            QStringLiteral("RemoteControl/Enabled"),
-                    false};
-
+SETTINGS_PARAMETER_IMPL(Enabled){QStringLiteral("RemoteControl/Enabled"), false};
         static auto list() {
             return std::tie(Enabled);
         }

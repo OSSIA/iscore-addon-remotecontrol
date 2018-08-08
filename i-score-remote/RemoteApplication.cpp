@@ -1,6 +1,8 @@
 #include "RemoteApplication.hpp"
 #include <QApplication>
 
+#include <wobjectimpl.h>
+W_OBJECT_IMPL(WebSocketHandler)
 RemoteApplication::RemoteApplication(int &argc, char **argv):
     m_app{new QApplication{argc, argv}}
 {

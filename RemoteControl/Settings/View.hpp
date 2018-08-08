@@ -11,13 +11,12 @@ namespace Settings
 class View :
         public score::GlobalSettingsView
 {
-        Q_OBJECT
+        W_OBJECT(View)
     public:
         View();
         void setEnabled(bool);
 
-    Q_SIGNALS:
-        void enabledChanged(bool);
+        void enabledChanged(bool b) W_SIGNAL(enabledChanged, b);
 
     private:
         QWidget* getWidget() override;

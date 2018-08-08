@@ -115,7 +115,7 @@ Receiver::Receiver(
       return;
 
     auto message = score::unmarshall<::State::Message>(obj);
-    m_dev.updateProxy.updateRemoteValue(message.address, message.value);
+    m_dev.updateProxy.updateRemoteValue(message.address.address, message.value);
   }));
 
 
@@ -142,7 +142,7 @@ Receiver::Receiver(
     if(d)
     {
       d->valueUpdated
-          .connect<Receiver, &Receiver::on_valueUpdated>(
+          .connect<&Receiver::on_valueUpdated>(
             *this);
       d->setListening(addr, true);
 
@@ -160,7 +160,7 @@ Receiver::Receiver(
     if(d)
     {
       d->valueUpdated
-          .disconnect<Receiver, &Receiver::on_valueUpdated>(
+          .disconnect<&Receiver::on_valueUpdated>(
             *this);
       d->setListening(addr, false);
       m_listenedAddresses.erase(addr);

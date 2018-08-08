@@ -6,11 +6,10 @@
 #include <RemoteControl/Scenario/Scenario.hpp>
 #include <RemoteControl/Scenario/Loop.hpp>
 
-#include <Scenario/score_plugin_scenario.hpp>
+#include <score_plugin_scenario.hpp>
 #include <score_plugin_deviceexplorer.hpp>
 
-score_addon_remotecontrol::score_addon_remotecontrol() :
-    QObject {}
+score_addon_remotecontrol::score_addon_remotecontrol()
 {
 }
 
@@ -54,3 +53,7 @@ auto score_addon_remotecontrol::required() const
       score_plugin_deviceexplorer::static_key()
     };
 }
+
+#include <score/plugins/PluginInstances.hpp>
+SCORE_EXPORT_PLUGIN(score_addon_remotecontrol)
+

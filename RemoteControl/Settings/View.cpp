@@ -3,6 +3,8 @@
 #include <QCheckBox>
 #include <QFormLayout>
 
+#include <wobjectimpl.h>
+W_OBJECT_IMPL(RemoteControl::Settings::View)
 namespace RemoteControl
 {
 namespace Settings

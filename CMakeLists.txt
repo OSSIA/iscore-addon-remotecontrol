@@ -42,7 +42,6 @@ set(SRCS
 )
 
 add_library(${PROJECT_NAME} ${SRCS} ${HDRS} ${QRCS})
-score_moc_headers(${PROJECT_NAME} "${HDRS}")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC score_plugin_scenario score_plugin_loop Qt5::WebSockets)
 

@@ -11,20 +11,11 @@
 #include <vector>
 
 class score_addon_remotecontrol final :
-        public QObject,
         public score::Plugin_QtInterface,
         public score::FactoryList_QtInterface,
         public score::FactoryInterface_QtInterface,
         public score::ApplicationPlugin_QtInterface
 {
-        Q_OBJECT
-        Q_PLUGIN_METADATA(IID FactoryInterface_QtInterface_iid)
-        Q_INTERFACES(
-                score::Plugin_QtInterface
-                score::FactoryList_QtInterface
-                score::FactoryInterface_QtInterface
-                score::ApplicationPlugin_QtInterface
-                )
         SCORE_PLUGIN_METADATA(1, "ecffb9d5-3d67-4b89-a64f-341b68cd9603")
     public:
         score_addon_remotecontrol();
