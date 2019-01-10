@@ -23,7 +23,7 @@ Presenter::Presenter(
             this, [&] (auto val) {
             if(val != m.getEnabled())
             {
-                m_disp.submitCommand<SetModelEnabled>(this->model(this), val);
+                m_disp.submit<SetModelEnabled>(this->model(this), val);
             }
         });
 

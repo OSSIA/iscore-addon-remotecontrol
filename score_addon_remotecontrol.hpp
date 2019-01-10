@@ -4,7 +4,7 @@
 #include <score/plugins/qt_interfaces/FactoryFamily_QtInterface.hpp>
 #include <score/plugins/qt_interfaces/GUIApplicationPlugin_QtInterface.hpp>
 #include <score/application/ApplicationContext.hpp>
-#include <score/plugins/customfactory/FactoryInterface.hpp>
+#include <score/plugins/Interface.hpp>
 
 #include <QObject>
 #include <utility>

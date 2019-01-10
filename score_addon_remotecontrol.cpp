@@ -1,5 +1,5 @@
 #include "score_addon_remotecontrol.hpp"
-#include <score/plugins/customfactory/FactorySetup.hpp>
+#include <score/plugins/FactorySetup.hpp>
 #include <RemoteControl/ApplicationPlugin.hpp>
 #include <RemoteControl/Settings/Factory.hpp>
 

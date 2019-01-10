@@ -27,6 +27,11 @@ class IntervalBase :
                 const Id<score::Component> & id,
                 ProcessComponentFactory& factory,
                 Process::ProcessModel &process);
+        ProcessComponent* make(
+            const Id<score::Component>& id, Process::ProcessModel& process)
+        {
+          return nullptr;
+        }
 
         bool removing(const Process::ProcessModel& cst, const ProcessComponent& comp);
 

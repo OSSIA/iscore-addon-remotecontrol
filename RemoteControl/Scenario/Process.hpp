@@ -5,7 +5,7 @@
 #include <score/model/ComponentFactory.hpp>
 #include <Process/ProcessComponent.hpp>
 #include <score_addon_remotecontrol_export.h>
-#include <score/plugins/customfactory/ModelFactory.hpp>
+#include <score/plugins/ModelFactory.hpp>
 
 namespace RemoteControl
 {

@@ -9,6 +9,7 @@
 
 
 #include <Device/Node/DeviceNode.hpp>
+#include <score/model/tree/TreeNodeSerialization.hpp>
 #include <Explorer/DocumentPlugin/DeviceDocumentPlugin.hpp>
 #include <QBuffer>
 #include <QJsonObject>
