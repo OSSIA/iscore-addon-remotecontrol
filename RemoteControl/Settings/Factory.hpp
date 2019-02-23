@@ -9,6 +9,11 @@ namespace RemoteControl
 {
 namespace Settings
 {
-SCORE_DECLARE_SETTINGS_FACTORY(Factory, Model, Presenter, View, "56ec9b15-2d32-48d9-bab3-b44cf7942c7f")
+SCORE_DECLARE_SETTINGS_FACTORY(
+    Factory,
+    Model,
+    Presenter,
+    View,
+    "56ec9b15-2d32-48d9-bab3-b44cf7942c7f")
 }
 }

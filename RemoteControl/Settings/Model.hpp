@@ -1,20 +1,22 @@
 #pragma once
 #include <score/plugins/settingsdelegate/SettingsDelegateModel.hpp>
+
 #include <score_addon_remotecontrol_export.h>
 
 namespace RemoteControl
 {
 namespace Settings
 {
-class SCORE_ADDON_REMOTECONTROL_EXPORT Model :
-        public score::SettingsDelegateModel
+class SCORE_ADDON_REMOTECONTROL_EXPORT Model
+    : public score::SettingsDelegateModel
 {
   W_OBJECT(Model)
-        bool m_Enabled = false;
-    public:
-        Model(QSettings& set, const score::ApplicationContext& ctx);
+  bool m_Enabled = false;
 
-        SCORE_SETTINGS_PARAMETER_HPP(, bool, Enabled)
+public:
+  Model(QSettings& set, const score::ApplicationContext& ctx);
+
+  SCORE_SETTINGS_PARAMETER_HPP(, bool, Enabled)
 };
 
 SCORE_SETTINGS_PARAMETER(Model, Enabled)

@@ -3,13 +3,12 @@
 
 namespace RemoteControl
 {
-class ApplicationPlugin final :
-        public score::GUIApplicationPlugin
+class ApplicationPlugin final : public score::GUIApplicationPlugin
 {
-    public:
-        ApplicationPlugin(const score::GUIApplicationContext& app);
+public:
+  ApplicationPlugin(const score::GUIApplicationContext& app);
 
-    protected:
-        void on_createdDocument(score::Document& doc) override;
+protected:
+  void on_createdDocument(score::Document& doc) override;
 };
 }
