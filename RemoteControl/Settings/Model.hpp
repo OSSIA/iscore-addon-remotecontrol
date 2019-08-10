@@ -16,7 +16,7 @@ class SCORE_ADDON_REMOTECONTROL_EXPORT Model
 public:
   Model(QSettings& set, const score::ApplicationContext& ctx);
 
-  SCORE_SETTINGS_PARAMETER_HPP(, bool, Enabled)
+  SCORE_SETTINGS_PARAMETER_HPP(SCORE_ADDON_REMOTECONTROL_EXPORT, bool, Enabled)
 };
 
 SCORE_SETTINGS_PARAMETER(Model, Enabled)
